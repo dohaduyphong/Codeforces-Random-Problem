@@ -12,6 +12,3 @@ Pick a rating range and get a random Codeforces problem to practice.
 - Your last 10 problems are listed under Recent picks, and they won't come up again until the filters run out of other problems.
 - Press `R` to roll again. You can turn the shortcut off.
 - Light and dark themes follow your system setting, with a toggle in the header.
-- On wide screens the filters and the result sit side by side; on phones they stack.
-- Your filters, handle and theme are saved in your browser. The problem list (about 1.5MB) is cached for 6 hours, so return visits skip the download.
-
