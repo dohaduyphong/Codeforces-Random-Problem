@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CF Random Problem</title>
+  <script>
+    // Apply the saved theme before first paint to avoid a flash.
+    try {
+      const theme = localStorage.getItem("cfrp:theme");
+      if (theme) document.documentElement.dataset.theme = JSON.parse(theme);
+    } catch {}
+  </script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page">
+    <header class="site-header">
+      <div>
+        <h1>Codeforces Random Problem</h1>
+        <p class="muted">Pick a rating range, get a problem.</p>
+      </div>
+      <button id="theme-toggle" type="button" class="secondary"></button>
+    </header>
+
+    <main class="layout">
+      <form id="filters" class="filters">
+        <div class="row">
+          <label>
+            Min rating
+            <input id="min" type="number" min="800" max="3500" step="100" value="800" required>
+          </label>
+          <label>
+            Max rating
+            <input id="max" type="number" min="800" max="3500" step="100" value="1600" required>
+          </label>
+        </div>
+
+        <label>
+          Codeforces handle <span class="muted">(optional, skips problems you've solved)</span>
+          <input id="handle" type="text" placeholder="Your handle" autocomplete="off" spellcheck="false">
+        </label>
+
+        <fieldset>
+          <legend>Contest type <span class="muted">(none checked = any)</span></legend>
+          <div id="divisions" class="chips">
+            <label><input type="checkbox" value="div1"> Div. 1</label>
+            <label><input type="checkbox" value="div2"> Div. 2</label>
+            <label><input type="checkbox" value="div3"> Div. 3</label>
+            <label><input type="checkbox" value="div4"> Div. 4</label>
+            <label><input type="checkbox" value="div12"> Div. 1 + 2</label>
+            <label><input type="checkbox" value="edu"> Educational</label>
+            <label><input type="checkbox" value="global"> Global</label>
+            <label><input type="checkbox" value="other"> Other</label>
+          </div>
+        </fieldset>
+
+        <details id="tags-box">
+          <summary>Tags <span id="tag-count" class="muted"></span></summary>
+          <p class="muted small">Problems must have every selected tag.</p>
+          <div id="tags" class="chips"></div>
+          <button id="clear-tags" type="button" class="link">Clear tags</button>
+        </details>
+
+        <button id="roll" type="submit" class="primary" disabled>Give me a problem</button>
+        <div class="status-row">
+          <p id="status" class="muted small" role="status"></p>
+          <button id="retry" type="button" class="secondary" hidden>Retry</button>
+        </div>
+        <label class="toggle small">
+          <input id="shortcut" type="checkbox" checked>
+          Press <kbd>R</kbd> to roll again
+        </label>
+      </form>
+
+      <div class="results">
+        <article id="result" class="card" hidden>
+          <div class="meta">
+            <span id="p-id"></span>
+            <span id="p-rating" class="rating"></span>
+          </div>
+          <h2><a id="p-link" target="_blank" rel="noopener"></a></h2>
+          <p id="p-solved" class="muted small"></p>
+          <details>
+            <summary>Show tags</summary>
+            <ul id="p-tags" class="tag-list"></ul>
+          </details>
+        </article>
+
+        <p id="empty" class="empty muted">Your problem shows up here. Set a rating range and press <strong>Give me a problem</strong>.</p>
+
+        <section id="history-section" hidden>
+          <h2>Recent picks</h2>
+          <ol id="history"></ol>
+        </section>
+      </div>
+    </main>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

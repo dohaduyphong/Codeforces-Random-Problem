@@ -1,0 +1,300 @@
+:root {
+  --bg: #f6f6f4;
+  --surface: #ffffff;
+  --ink: #1b1d21;
+  --muted: #5d6270;
+  --line: #dcdde1;
+  --control-border: #7d828c;
+  --accent: #1f5fbf;
+  --accent-ink: #ffffff;
+  --danger: #b3261e;
+
+  /* Codeforces rank colors, darkened where needed for 3:1 on the light card. */
+  --rank-newbie: #767676;
+  --rank-pupil: #2b8a3e;
+  --rank-specialist: #0b7d74;
+  --rank-expert: #3b5bdb;
+  --rank-cm: #9c36b5;
+  --rank-master: #c2570c;
+  --rank-gm: #c92a2a;
+  color-scheme: light;
+}
+
+/* Dark tokens, used when the OS prefers dark (unless the toggle says light) or the toggle says dark. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #15171b;
+    --surface: #1e2127;
+    --ink: #e8e9ec;
+    --muted: #a0a5b1;
+    --line: #343842;
+    --control-border: #767b86;
+    --accent: #6ea2f5;
+    --accent-ink: #0d1117;
+    --danger: #f2948c;
+    --rank-newbie: #9aa0a6;
+    --rank-pupil: #51cf66;
+    --rank-specialist: #3bc9db;
+    --rank-expert: #748ffc;
+    --rank-cm: #da77f2;
+    --rank-master: #ffa94d;
+    --rank-gm: #ff6b6b;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #15171b;
+  --surface: #1e2127;
+  --ink: #e8e9ec;
+  --muted: #a0a5b1;
+  --line: #343842;
+  --control-border: #767b86;
+  --accent: #6ea2f5;
+  --accent-ink: #0d1117;
+  --danger: #f2948c;
+  --rank-newbie: #9aa0a6;
+  --rank-pupil: #51cf66;
+  --rank-specialist: #3bc9db;
+  --rank-expert: #748ffc;
+  --rank-cm: #da77f2;
+  --rank-master: #ffa94d;
+  --rank-gm: #ff6b6b;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+/* Phone: one column with a 16px gutter. */
+.page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+
+.site-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+h1 { font-size: clamp(1.35rem, 1.1rem + 1.2vw, 1.75rem); line-height: 1.25; margin: 0 0 4px; }
+.site-header p { margin: 0; }
+
+.layout { display: grid; gap: 32px; margin-top: 24px; }
+
+.muted { color: var(--muted); }
+.small { font-size: 0.875rem; }
+
+.filters { display: grid; gap: 16px; align-content: start; }
+
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+label { display: grid; gap: 6px; font-weight: 500; }
+label .muted, legend .muted { font-weight: 400; }
+
+input[type="text"], input[type="number"] {
+  font: inherit;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid var(--control-border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--ink);
+  min-width: 0;
+  width: 100%;
+}
+
+input:focus-visible, button:focus-visible, summary:focus-visible, a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+legend { font-weight: 500; padding: 0; margin-bottom: 8px; }
+
+details > summary {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* Each chip is a full 44px-tall label so the whole pill is the tap target. */
+.chips label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 14px;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  border: 1px solid var(--control-border);
+  border-radius: 999px;
+  background: var(--surface);
+  cursor: pointer;
+}
+
+.chips label:has(input:checked) {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent);
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.chips input { margin: 0; }
+
+/* 38 tags would push the roll button off-screen, so the list scrolls inside its own box. */
+#tags {
+  max-height: 248px;
+  overflow-y: auto;
+  padding: 8px;
+  margin-bottom: 4px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+button { font: inherit; cursor: pointer; min-height: 44px; }
+
+button.primary {
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 600;
+}
+
+button.primary:disabled { opacity: 0.55; cursor: not-allowed; }
+
+/* Keep the main action reachable however long the filters get; the page-colored ring separates it from chips scrolling underneath. */
+#roll {
+  position: sticky;
+  bottom: 16px;
+  z-index: 1;
+  box-shadow: 0 0 0 8px var(--bg);
+}
+
+button.secondary {
+  padding: 8px 14px;
+  border: 1px solid var(--control-border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+button.link {
+  border: 0;
+  background: none;
+  padding: 0;
+  color: var(--accent);
+  font-size: 0.875rem;
+}
+
+.status-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: -8px; }
+[hidden] { display: none !important; }
+#status { margin: 0; flex: 1 1 200px; }
+#status.error { color: var(--danger); }
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font-weight: 400;
+  color: var(--muted);
+  cursor: pointer;
+  justify-self: start;
+}
+
+kbd {
+  font: 600 0.8125rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  padding: 2px 6px;
+  border: 1px solid var(--control-border);
+  border-radius: 4px;
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.results { display: grid; gap: 24px; align-content: start; }
+
+.empty {
+  margin: 0;
+  padding: 24px;
+  border: 1px dashed var(--control-border);
+  border-radius: 10px;
+}
+
+.card {
+  padding: 20px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+.card h2 { margin: 6px 0 4px; font-size: 1.35rem; line-height: 1.3; overflow-wrap: anywhere; }
+.card h2 a { color: var(--ink); text-decoration-color: var(--control-border); text-underline-offset: 4px; }
+.card h2 a:hover { text-decoration-color: currentColor; }
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.rating { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; color: var(--ink); }
+.rating::before {
+  content: "";
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--rank);
+}
+
+.rating[data-rank="newbie"] { --rank: var(--rank-newbie); }
+.rating[data-rank="pupil"] { --rank: var(--rank-pupil); }
+.rating[data-rank="specialist"] { --rank: var(--rank-specialist); }
+.rating[data-rank="expert"] { --rank: var(--rank-expert); }
+.rating[data-rank="cm"] { --rank: var(--rank-cm); }
+.rating[data-rank="master"] { --rank: var(--rank-master); }
+.rating[data-rank="gm"] { --rank: var(--rank-gm); }
+
+.tag-list { display: flex; flex-wrap: wrap; gap: 6px; padding: 0; margin: 4px 0 0; list-style: none; }
+.tag-list li { font-size: 0.8125rem; padding: 2px 8px; border-radius: 999px; background: var(--bg); color: var(--muted); }
+
+#history-section h2 { font-size: 1rem; margin: 0 0 8px; }
+#history { margin: 0; padding-left: 20px; }
+#history li { padding: 4px 0; overflow-wrap: anywhere; }
+#history a { color: var(--accent); }
+#history .muted { font-variant-numeric: tabular-nums; }
+
+/* Tablet: same single column, roomier. */
+@media (min-width: 600px) {
+  .page { padding: 40px 24px 64px; }
+}
+
+/* Desktop: filters left, result right, so re-rolling never needs a scroll. */
+@media (min-width: 900px) {
+  .page { max-width: 1040px; }
+  .layout {
+    grid-template-columns: minmax(320px, 400px) minmax(0, 1fr);
+    gap: 48px;
+    margin-top: 32px;
+  }
+  .results { position: sticky; top: 24px; }
+}
