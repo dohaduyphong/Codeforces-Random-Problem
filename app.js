@@ -293,8 +293,7 @@ function currentTheme() {
 
 function renderThemeToggle() {
   const next = currentTheme() === "dark" ? "light" : "dark";
-  $("theme-toggle").textContent = next === "dark" ? "Dark theme" : "Light theme";
-  $("theme-toggle").setAttribute("aria-label", `Switch to ${next} theme`);
+  $("theme-toggle").textContent = `Switch to ${next}`;
 }
 
 async function init() {

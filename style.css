@@ -245,8 +245,15 @@ kbd {
   border-radius: 10px;
 }
 
-.card h2 { margin: 6px 0 4px; font-size: 1.35rem; line-height: 1.3; overflow-wrap: anywhere; }
-.card h2 a { color: var(--ink); text-decoration-color: var(--control-border); text-underline-offset: 4px; }
+.card h2 { margin: 0; font-size: 1.35rem; line-height: 1.3; overflow-wrap: anywhere; }
+.card h2 a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--ink);
+  text-decoration-color: var(--control-border);
+  text-underline-offset: 4px;
+}
 .card h2 a:hover { text-decoration-color: currentColor; }
 
 .meta {
@@ -279,8 +286,8 @@ kbd {
 
 #history-section h2 { font-size: 1rem; margin: 0 0 8px; }
 #history { margin: 0; padding-left: 20px; }
-#history li { padding: 4px 0; overflow-wrap: anywhere; }
-#history a { color: var(--accent); }
+#history li { padding: 2px 0; overflow-wrap: anywhere; }
+#history a { display: inline-flex; align-items: center; min-height: 44px; color: var(--accent); }
 #history .muted { font-variant-numeric: tabular-nums; }
 
 /* Tablet: same single column, roomier. */
